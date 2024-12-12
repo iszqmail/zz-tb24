@@ -95,6 +95,7 @@ public class Run {
     }
     **/
     public static void main(String[] args) {
+        LOGGER.warn(args);
         if (args.length == 0) {
             LOGGER.warn("请在Secrets中填写BDUSS");
             return;
