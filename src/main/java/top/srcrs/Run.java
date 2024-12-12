@@ -75,6 +75,7 @@ public class Run {
      */
     private static Integer followNum = 201;
 
+    /**
     public static void main(String[] args) {
         Cookie cookie = Cookie.getInstance();
         // 存入Cookie，以备使用
@@ -92,6 +93,49 @@ public class Run {
             run.send(args[1]);
         }
     }
+    **/
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            LOGGER.warn("请在Secrets中填写BDUSS");
+            return;
+        }
+    
+        // 分割传入的多个 BDUSS
+        String[] bdussArray = args[0].split("#");
+        List<String> bdussList = Arrays.asList(bdussArray);
+    
+        for (String bdussEntry : bdussList) {
+            // 按 @ 分割账号名称和 BDUSS
+            String[] parts = bdussEntry.split("@", 2);
+            String accountName = parts.length > 1 ? parts[0] : "未知账号";
+            String bduss = parts.length > 1 ? parts[1] : parts[0];
+    
+            Cookie cookie = Cookie.getInstance();
+            cookie.setBDUSS(bduss); // 设置当前 BDUSS
+            Run run = new Run();
+    
+            LOGGER.info("开始处理账号: {} (BDUSS: {})", accountName, bduss);
+            success.clear();
+            failed.clear();
+            invalid.clear();
+    
+            try {
+                run.getTbs();
+                run.getFollow();
+                run.runSign();
+                LOGGER.info("账号: {} 签到完成，共 {} 个贴吧 - 成功: {} - 失败: {} - {}", 
+                    accountName, followNum, success.size(), followNum - success.size(), failed);
+            } catch (Exception e) {
+                LOGGER.error("账号: {} (BDUSS: {}) 处理失败: {}", accountName, bduss, e.getMessage());
+            }
+    
+            // 如果有推送参数，则推送结果
+            if (args.length == 2) {
+                run.send(args[1]);
+            }
+        }
+    }
+
 
     /**
      * 进行登录，获得 tbs ，签到的时候需要用到这个参数
