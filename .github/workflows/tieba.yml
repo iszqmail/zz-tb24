@@ -5,7 +5,7 @@ name: Start
 on:
    workflow_dispatch:
    schedule:
-       - cron: '30 7 * * *'
+       - cron: '54 7 * * *'
 
 jobs:
   TiebaSignIn:
