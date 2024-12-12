@@ -219,7 +219,12 @@ public class Run {
                         iterator.remove();
                         success.add(rotation);
                         failed.remove(rotation);
+                        //隐藏完整贴吧名
+                        String maskedRotation = rotation.charAt(0) + "*".repeat(rotation.length() - 1);
+                        LOGGER.info(maskedRotation + ": " + "签到成功");
+                        /** 原显示完整贴吧名
                         LOGGER.info(rotation + ": " + "签到成功");
+                        **/
                     } else {
                         failed.add(rotation);
                         LOGGER.warn(rotation + ": " + "签到失败");
