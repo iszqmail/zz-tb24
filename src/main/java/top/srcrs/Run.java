@@ -111,7 +111,7 @@ public class Run {
             String accountName = parts.length > 1 ? parts[0] : "未知账号";
             String bduss = parts.length > 1 ? parts[1] : parts[0];
             
-            LOGGER.info("------------------------- {} -------------------------", accountName);
+            LOGGER.info("---------------------------- {} ----------------------------", accountName);
     
             Cookie cookie = Cookie.getInstance();
             cookie.setBDUSS(bduss); // 设置当前 BDUSS
