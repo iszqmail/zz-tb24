@@ -147,8 +147,8 @@ public class Request {
             LOGGER.info("{} 不存在",name);
             return true;
         } else {
-            String name = name.charAt(0) + new String(new char[name.length() - 1]).replace("\0", "*");//只显示贴吧第一个字符
-            LOGGER.info("{} 存在",name);
+            String maskedname = name.charAt(0) + new String(new char[name.length() - 1]).replace("\0", "*");//只显示贴吧第一个字符
+            LOGGER.info("{} 存在",maskedname);
             return false;
         }
     }
