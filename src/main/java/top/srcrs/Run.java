@@ -227,7 +227,7 @@ public class Run {
                         **/
                     } else {
                         failed.add(rotation);
-                        LOGGER.warn(rotation + ": " + "签到失败");
+                        LOGGER.warn(rotation + "***: " + "签到失败 ***");
                     }
                 }
                 if (success.size() != followNum - invalid.size()) {
