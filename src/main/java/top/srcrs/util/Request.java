@@ -147,6 +147,7 @@ public class Request {
             LOGGER.info("{} 不存在",name);
             return true;
         } else {
+            String name = name.charAt(0) + new String(new char[name.length() - 1]).replace("\0", "*");
             LOGGER.info("{} 存在",name);
             return false;
         }
