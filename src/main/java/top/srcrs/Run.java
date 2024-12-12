@@ -105,10 +105,13 @@ public class Run {
         List<String> bdussList = Arrays.asList(bdussArray);
     
         for (String bdussEntry : bdussList) {
+            
             // 按 @ 分割账号名称和 BDUSS
             String[] parts = bdussEntry.split("@", 2);
             String accountName = parts.length > 1 ? parts[0] : "未知账号";
             String bduss = parts.length > 1 ? parts[1] : parts[0];
+            
+            LOGGER.info("------------------------- {} -------------------------", accountName);
     
             Cookie cookie = Cookie.getInstance();
             cookie.setBDUSS(bduss); // 设置当前 BDUSS
