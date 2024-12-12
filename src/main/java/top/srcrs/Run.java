@@ -114,7 +114,7 @@ public class Run {
             cookie.setBDUSS(bduss); // 设置当前 BDUSS
             Run run = new Run();
     
-            LOGGER.info("开始处理账号: {} (BDUSS: {})", accountName, bduss);
+            LOGGER.info("开始处理账号: {} (BDUSS: {})", accountName, "bduss");
             success.clear();
             failed.clear();
             invalid.clear();
