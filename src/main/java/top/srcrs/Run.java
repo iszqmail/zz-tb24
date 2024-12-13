@@ -280,15 +280,33 @@ public class Run {
 
             JSONObject response = post;
     
-            // 解析响应
-            LOGGER.info("成长任务等级签到完整返回: {}", response != null ? response.toJSONString() : "null");
-            if (response != null && response.getIntValue("error_code") == 0) {
-                LOGGER.info("成长任务等级签到成功: {}", response.getString("error_msg"));
-                LOGGER.info("成长任务等级签到成功: {}", response);
-            } else if (response != null) {
-                LOGGER.warn("成长任务等级签到失败: {}", response.getString("error_msg"));
+
+            // 判断响应内容
+            if (response != null) {
+
+                /** 打印返回内容
+                String responseStr = response.toJSONString();
+                if (responseStr.length() > 500) {
+                    LOGGER.info("成长等级任务签到-返回内容过长，分段打印:");
+                    for (int i = 0; i < responseStr.length(); i += 500) {
+                        LOGGER.info(responseStr.substring(i, Math.min(i + 500, responseStr.length())));
+                    }
+                } else {
+                    LOGGER.info("成长等级任务签到-完整返回: {}", responseStr);
+                }
+                */
+    
+                // 提取状态码和消息
+                int no = response.getIntValue("no");
+                String error = response.getString("error");
+    
+                if (no == 0) {
+                    LOGGER.info("成长等级任务-签到成功: {}", error != null ? error : "无返回信息");
+                } else {
+                    LOGGER.warn("成长等级任务-签到失败: 状态码: {}, 消息: {}", no, error != null ? error : "无");
+                }
             } else {
-                LOGGER.warn("成长任务等级签到失败: 未知错误");
+                LOGGER.warn("成长任务等级签到失败: 未知错误，响应为空");
             }
         } catch (Exception e) {
             LOGGER.error("成长任务等级签到出错: {}", e.getMessage());
