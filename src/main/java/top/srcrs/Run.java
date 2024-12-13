@@ -282,6 +282,7 @@ public class Run {
             // 解析响应
             if (response != null && response.getIntValue("error_code") == 0) {
                 LOGGER.info("成长任务等级签到成功: {}", response.getString("error_msg"));
+                LOGGER.info("成长任务等级签到成功: {}", response);
             } else if (response != null) {
                 LOGGER.warn("成长任务等级签到失败: {}", response.getString("error_msg"));
             } else {
