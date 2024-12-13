@@ -1,3 +1,4 @@
+
 package top.srcrs;
 
 import com.alibaba.fastjson.JSONArray;
@@ -280,6 +281,7 @@ public class Run {
             JSONObject response = post;
     
             // 解析响应
+            LOGGER.info("成长任务等级签到完整返回: {}", response != null ? response.toJSONString() : "null");
             if (response != null && response.getIntValue("error_code") == 0) {
                 LOGGER.info("成长任务等级签到成功: {}", response.getString("error_msg"));
                 LOGGER.info("成长任务等级签到成功: {}", response);
