@@ -133,9 +133,9 @@ public class Run {
                 
                 // 添加成长任务等级签到
                 try {
-                    run.performCzSign(tbs, "page_sign");// 调用成长任务签到逻辑
+                    run.performCzSign();// 调用成长任务签到逻辑
                 } catch (Exception e) {
-                    LOGGER.error("账号: {} (BDUSS: {}) 成长任务签到失败: {}", accountName, bduss, e.getMessage());
+                    LOGGER.error("账号: {} (BDUSS: {}) 成长任务签到失败: {}", accountName, "bduss", e.getMessage());
                 }
                 
                 run.getFollow();
@@ -265,10 +265,10 @@ public class Run {
 
     
     /**
-     * 完成成长任务等级签到
+     * 用户成长等级 签到
      */
-    public void performCzSign(String tbs, String actType) {
-        LOGGER.info("开始成长任务等级签到");
+    public void performCzSign() {
+        LOGGER.info("开始成长等级签到");
         try {
             // 构造请求数据
             StringBuilder requestBody = new StringBuilder();
@@ -277,7 +277,7 @@ public class Run {
             requestBody.append("&cuid=-");
     
             // 发起 POST 请求
-            String body = "kw=" + s + "&tbs=" + tbs + "&sign=" + Encryption.enCodeMd5("kw=" + rotation + "tbs=" + tbs + "tiebaclient!!!");
+            String body = "tbs=" + tbs + "&act_type=page_sign&cuid=-";
             JSONObject post = new JSONObject();
             post = Request.post(SIGN_URL, body);
             LOGER.info(post);
