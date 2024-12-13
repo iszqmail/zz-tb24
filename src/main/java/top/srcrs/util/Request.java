@@ -108,6 +108,10 @@ public class Request {
                 entity = resp.getEntity();
             }
             respContent = EntityUtils.toString(entity, "UTF-8");
+            
+            // 打印返回内容以便调试
+            LOGGER.debug("完整返回内容: {}", respContent);
+            
         } catch (Exception e) {
             LOGGER.info("post请求错误 -- " + e);
         } finally {
