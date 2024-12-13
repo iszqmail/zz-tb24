@@ -277,7 +277,11 @@ public class Run {
             requestBody.append("&cuid=-");
     
             // 发起 POST 请求
-            JSONObject response = post(CZ_SIGN_URL, "tbs=" + tbs + "&act_type=" + actType + "&cuid=-");
+            String body = "kw=" + s + "&tbs=" + tbs + "&sign=" + Encryption.enCodeMd5("kw=" + rotation + "tbs=" + tbs + "tiebaclient!!!");
+            JSONObject post = new JSONObject();
+            post = Request.post(SIGN_URL, body);
+            LOGER.info(post);
+            JSONObject response = post;
     
             // 解析响应
             if (response != null && response.getIntValue("error_code") == 0) {
