@@ -74,6 +74,11 @@ public class Run {
      * 用户所关注的贴吧数量
      */
     private static Integer followNum = 201;
+    
+    /**
+     * 用户成长等级签到
+     */
+    private static final String CZ_SIGN_URL = "https://tieba.baidu.com/mo/q/usergrowth/commitUGTaskInfo";
 
     /**
     public static void main(String[] args) {
@@ -121,6 +126,13 @@ public class Run {
             success.clear();
             failed.clear();
             invalid.clear();
+
+            // 添加成长任务等级签到
+            try {
+                run.performCzSign(); // 调用成长任务签到逻辑
+            } catch (Exception e) {
+                LOGGER.error("账号: {} (BDUSS: {}) 成长任务签到失败: {}", accountName, bduss, e.getMessage());
+            }
     
             try {
                 run.getTbs();
@@ -248,6 +260,33 @@ public class Run {
             LOGGER.error("签到部分出现错误 -- " + e);
         }
     }
+    
+
+    /**
+     * 完成成长任务等级签到
+     */
+    public void performCzSign() {
+        LOGGER.info("开始成长任务等级签到");
+        try {
+            // 构造请求数据
+            JSONObject data = new JSONObject();
+            data.put("tbs", tbs);
+            data.put("act_type", "page_sign"); // 替换为具体的 act_type 值
+            data.put("cuid", "-");
+    
+            // 发起 POST 请求
+            // String CZ_SIGN_URL = "https://tieba.baidu.com/";
+            JSONObject response = Request.post(CZ_SIGN_URL, data);
+            if (response.getIntValue("error_code") == 0) {
+                LOGGER.info("成长任务等级签到成功: {}", response.getString("error_msg"));
+            } else {
+                LOGGER.warn("成长任务等级签到失败: {}", response.getString("error_msg"));
+            }
+        } catch (Exception e) {
+            LOGGER.error("成长任务等级签到出错: {}", e.getMessage());
+        }
+    }
+
 
     /**
      * 发送运行结果到微信，通过 server 酱
