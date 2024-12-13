@@ -273,7 +273,7 @@ public class Run {
             // 构造请求数据
             StringBuilder requestBody = new StringBuilder();
             requestBody.append("tbs=").append(tbs);
-            requestBody.append("&act_type=").append(actType);
+            requestBody.append("&act_type=").append("page_sign");
             requestBody.append("&cuid=-");
     
             // 发起 POST 请求
