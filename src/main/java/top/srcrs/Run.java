@@ -277,7 +277,7 @@ public class Run {
             requestBody.append("&cuid=-");
     
             // 发起 POST 请求
-            JSONObject response = post(CZ_SIGN_URL, requestBody.toString());
+            JSONObject response = post(CZ_SIGN_URL, "tbs=" + tbs + "&act_type=" + actType + "&cuid=-");
     
             // 解析响应
             if (response != null && response.getIntValue("error_code") == 0) {
