@@ -280,7 +280,7 @@ public class Run {
             String body = "tbs=" + tbs + "&act_type=page_sign&cuid=-";
             JSONObject post = new JSONObject();
             post = Request.post(SIGN_URL, body);
-            LOGER.info(post);
+            LOGGER.info(post);
             JSONObject response = post;
     
             // 解析响应
