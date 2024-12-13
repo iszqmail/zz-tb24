@@ -110,7 +110,15 @@ public class Request {
             respContent = EntityUtils.toString(entity, "UTF-8");
             
             // 打印返回内容以便调试
-            LOGGER.debug("完整返回内容: {}", respContent);
+            // LOGGER.debug("完整返回内容: {}", respContent);
+            if (respContent.length() > 500) {
+                LOGGER.info("返回内容过长，分段打印:");
+                for (int i = 0; i < respContent.length(); i += 500) {
+                    LOGGER.info(respContent.substring(i, Math.min(i + 500, respContent.length())));
+                }
+            } else {
+                LOGGER.info("完整返回内容: {}", respContent);
+            }
             
         } catch (Exception e) {
             LOGGER.info("post请求错误 -- " + e);
