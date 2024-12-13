@@ -271,16 +271,12 @@ public class Run {
         LOGGER.info("开始成长等级签到");
         try {
             // 构造请求数据
-            StringBuilder requestBody = new StringBuilder();
-            requestBody.append("tbs=").append(tbs);
-            requestBody.append("&act_type=").append("page_sign");
-            requestBody.append("&cuid=-");
-    
-            // 发起 POST 请求
             String body = "tbs=" + tbs + "&act_type=page_sign&cuid=-";
+            
+            // 发起 POST 请求
             JSONObject post = new JSONObject();
-            post = Request.post(SIGN_URL, body);
-            //LOGGER.info(post);
+            post = Request.post(CZ_SIGN_URL, body);
+
             JSONObject response = post;
     
             // 解析响应
