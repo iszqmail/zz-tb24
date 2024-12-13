@@ -76,7 +76,7 @@ public class Run {
     private static Integer followNum = 201;
     
     /**
-     * 用户成长等级签到
+     * 用户成长等级 签到
      */
     private static final String CZ_SIGN_URL = "https://tieba.baidu.com/mo/q/usergrowth/commitUGTaskInfo";
 
@@ -127,15 +127,17 @@ public class Run {
             failed.clear();
             invalid.clear();
 
-            // 添加成长任务等级签到
-            try {
-                run.performCzSign(); // 调用成长任务签到逻辑
-            } catch (Exception e) {
-                LOGGER.error("账号: {} (BDUSS: {}) 成长任务签到失败: {}", accountName, bduss, e.getMessage());
-            }
     
             try {
                 run.getTbs();
+                
+                // 添加成长任务等级签到
+                try {
+                    run.performCzSign(tbs, "page_sign");// 调用成长任务签到逻辑
+                } catch (Exception e) {
+                    LOGGER.error("账号: {} (BDUSS: {}) 成长任务签到失败: {}", accountName, bduss, e.getMessage());
+                }
+                
                 run.getFollow();
                 run.runSign();
                 LOGGER.info("账号: {} 签到完成，共 {} 个贴吧 - 成功: {} - 失败: {} - {}", 
@@ -260,27 +262,30 @@ public class Run {
             LOGGER.error("签到部分出现错误 -- " + e);
         }
     }
-    
 
+    
     /**
      * 完成成长任务等级签到
      */
-    public void performCzSign() {
+    public void performCzSign(String tbs, String actType) {
         LOGGER.info("开始成长任务等级签到");
         try {
             // 构造请求数据
-            JSONObject data = new JSONObject();
-            data.put("tbs", tbs);
-            data.put("act_type", "page_sign"); // 替换为具体的 act_type 值
-            data.put("cuid", "-");
+            StringBuilder requestBody = new StringBuilder();
+            requestBody.append("tbs=").append(tbs);
+            requestBody.append("&act_type=").append(actType);
+            requestBody.append("&cuid=-");
     
             // 发起 POST 请求
-            // String CZ_SIGN_URL = "https://tieba.baidu.com/";
-            JSONObject response = Request.post(CZ_SIGN_URL, data);
-            if (response.getIntValue("error_code") == 0) {
+            JSONObject response = post(CZ_SIGN_URL, requestBody.toString());
+    
+            // 解析响应
+            if (response != null && response.getIntValue("error_code") == 0) {
                 LOGGER.info("成长任务等级签到成功: {}", response.getString("error_msg"));
-            } else {
+            } else if (response != null) {
                 LOGGER.warn("成长任务等级签到失败: {}", response.getString("error_msg"));
+            } else {
+                LOGGER.warn("成长任务等级签到失败: 未知错误");
             }
         } catch (Exception e) {
             LOGGER.error("成长任务等级签到出错: {}", e.getMessage());
