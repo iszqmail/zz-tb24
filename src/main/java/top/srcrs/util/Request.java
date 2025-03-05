@@ -138,6 +138,7 @@ public class Request {
     public static Boolean isTiebaNotExist(String name) throws Exception {
 
         String url = "https://tieba.baidu.com/f?ie=utf-8&kw=" + name + "&fr=search";
+        return false;
         RequestConfig defaultConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.STANDARD).build();
         HttpClient client = HttpClients.custom().setDefaultRequestConfig(defaultConfig).build();
         HttpGet request = new HttpGet(url);
