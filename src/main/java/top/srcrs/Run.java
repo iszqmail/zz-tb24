@@ -193,7 +193,7 @@ public class Run {
                 if ("0".equals(((JSONObject) array).getString("is_sign"))) {
                     // 将为签到的贴吧加入到 follow 中，待签到
                     follow.add(tiebaName.replace("+", "%2B"));
-                    // 过滤失效的贴吧
+                    // 过滤失效的贴吧 (检查此吧是否存在)
                     if (Request.isTiebaNotExist(tiebaName)) {
                         follow.remove(tiebaName);
                         invalid.add(tiebaName);
