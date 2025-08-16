@@ -187,6 +187,7 @@ public class Run {
             LOGGER.info("获取贴吧列表成功");
             JSONArray jsonArray = jsonObject.getJSONObject("data").getJSONArray("like_forum");
             followNum = jsonArray.size();
+            LOGGER.info("用户关注贴吧数量: {} 个贴吧", followNum);
             // 获取用户所有关注的贴吧
             for (Object array : jsonArray) {
                 String tiebaName = ((JSONObject) array).getString("forum_name");
