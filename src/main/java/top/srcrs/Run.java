@@ -250,7 +250,9 @@ public class Run {
                 }
                 if (success.size() != followNum - invalid.size()) {
                     // 为防止短时间内多次请求接口，触发风控，设置每一轮签到完等待 5 分钟
-                    Thread.sleep(1000 * 60 * 5);
+                    int randomTime5 = 1000 * 60 * 5;
+                    LOGGER.info("等待 {} 分钟", randomTime5);
+                    Thread.sleep(randomTime5);
                     /**
                      * 重新获取 tbs
                      * 尝试解决以前第 1 次签到失败，剩余 4 次循环都会失败的错误。
